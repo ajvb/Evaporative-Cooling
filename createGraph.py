@@ -2,12 +2,26 @@ from operator import itemgetter, attrgetter
 import networkx as nx
 import matplotlib.pyplot as plt
 import pydot
+import argparse
 
-filepath = 'dataset/reddit_votes.csv'   #location of reddit data dump
-nRows = 10000                           #first rows of dataset to process
-nSkip = 100                             #skip every nSkip row of dataset
+parser = argparse.ArgumentParser(description='''A recommendation
+                                 engine for reddit''',
+                                 version='Evaporative-Cooling 0.0')
 
-file = open(filepath)
+filepath = '/Users/dmvaldman/Documents/datasets/reddit_votes.csv'
+
+parser.add_argument('--path', action='store', dest='path',
+                     help='''Specifies where the .csv file
+                     is''')
+args = parser.parse_args()
+
+nRows = 10000
+nSkip = 100
+
+if args.path:
+    file = open(args.path)
+else:
+    file = open(filepath)
 
 #create subset of dataset and load it into 'data'
 data = []
